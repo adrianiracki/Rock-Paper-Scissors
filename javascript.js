@@ -5,47 +5,94 @@ function getComputerChoice(){
 };
 
 function playRound(playerSelection, computerSelection){
-    if (playerSelection === '' || playerSelection === null)
-        return `Enter: "Rock", "Paper" or "Scissors"`;
-
-    playerSelection = playerSelection.toUpperCase();
-
     if (playerSelection === 'ROCK') {
         if (computerSelection === 'Rock')
-            return `It's a tie. Rock vs Rock.`;
+            return `tie`;
 
         else if (computerSelection === 'Paper')
-            return `You lose! Paper beats Rock!`;
+            return `lose`;
 
         else if (computerSelection === 'Scissors')
-            return `You win! Rock beats Scissors!`;       
+            return `win`;       
     }
     else if (playerSelection === 'PAPER') {
         if (computerSelection === 'Rock')
-            return `You win! Paper beats Rock!`;
+            return `win`;
 
         else if (computerSelection === 'Paper')
-            return `It's a tie. Paper vs Paper.`;
+            return `tie`;
 
         else if (computerSelection === 'Scissors')
-            return `You lose! Scissors beat Paper!`;
+            return `lose`;
     }
     else if (playerSelection === 'SCISSORS') {
         if (computerSelection === 'Rock')
-            return `You lose! Rock beats Scissors!`;
+            return `lose`;
 
         else if (computerSelection === 'Paper')
-            return `You win! Scissors beat Paper!`;
+            return `win`;
 
         else if (computerSelection === 'Scissors')
-            return `It's a tie! Scissors vs Scissors!`;
+            return `tie`;
     }
-    
-    else return `You entered wrong value. Enter "Rock", "Paper" or "Scissors" `;
 };
 
-const playerSelection = prompt(`Enter your choice: "Rock", "Paper" or "Scissors".`);
-const computerSelection = getComputerChoice();
-console.log(computerSelection);
-console.log(playRound(playerSelection, computerSelection));
+
+
+
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    let computerSelection;
+    let playerSelection;
+    for (let i = 0; i < 5; i++) {
+        playerSelection = prompt(`Enter your choice: "Rock", "Paper" or "Scissors".`);
+        if (playerSelection === '' || playerSelection === null){
+            alert(`Enter: "Rock", "Paper" or "Scissors"`);
+            --i;
+        }
+        else {
+            playerSelection = playerSelection.toUpperCase();
+            if (playerSelection !== "ROCK" && playerSelection !== "PAPER" && playerSelection !== "SCISSORS") {
+                alert(`You entered wrong value. Enter "Rock", "Paper" or "Scissors" `)
+                --i;
+            }
+            else {
+                computerSelection = getComputerChoice();
+                let result = playRound(playerSelection, computerSelection);
+              
+                if (result === 'win') {
+                    ++playerScore;
+                }
+                else if (result === 'lose') {
+                    ++computerScore;
+                }
+                else if (result === 'tie') {
+                    ++playerScore;
+                    ++computerScore;
+                }
+            }
+
+        }
+
+        console.log(`${computerSelection}, ${playerScore} : ${computerScore}`);
+    };
+
+    if (playerScore > computerScore) {
+        return `You win! ${playerScore} : ${computerScore}`;
+    }
+    else if (playerScore < computerScore) {
+        return `You lose! ${playerScore} : ${computerScore}`;
+    }
+    else if (playerScore === computerScore) {
+        return `It's a tie! ${playerScore} : ${computerScore}`
+    }};
+
+    let finalResult = game();
+
+    console.log(finalResult);
+
+
+    
+
 
